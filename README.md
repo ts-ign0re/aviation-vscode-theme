@@ -7,10 +7,7 @@ Inspired by avionics and human-machine interface (HMI) design in aviation system
 
 Ideal for developers who want high signal-to-noise UI and attention guidance like in real cockpits.
 
-![Screenshot](https://raw.githubusercontent.com/ts-ign0re/aviation-productivity-theme/main/screenshots/preview.png)
-
-(Recommended icon theme: [Symbols Visual Studio Icons](https://marketplace.visualstudio.com/items?itemName=joaoguinossi.vscode-icon-theme).)
-
+![Screenshot](https://raw.githubusercontent.com/ts-ign0re/aviation-vscode-theme/refs/heads/main/screenshots/preview.png)
 
 ## Installing
 
