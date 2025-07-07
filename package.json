@@ -15,7 +15,7 @@
         "url": "https://github.com/ts-ign0re/aviation-vscode-theme/issues"
     },
     "publisher": "ts-ign0re",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "engines": {
         "vscode": "^1.38.0"
     },
