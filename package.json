@@ -1,0 +1,40 @@
+{
+    "name": "aviation-vscode-theme",
+    "displayName": "Aviation VSCode Theme",
+    "description": "Dark cockpit focus, light radar sidebars. Inspired by avionics.",
+    "license": "MIT",
+    "author": {
+        "name": "ts-ign0re",
+        "url": "https://github.com/ts-ign0re"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ts-ign0re/aviation-vscode-theme.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ts-ign0re/aviation-vscode-theme/issues"
+    },
+    "publisher": "ts-ign0re",
+    "version": "1.0.0",
+    "engines": {
+        "vscode": "^1.38.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "keywords": [
+        "aviation",
+        "avionics",
+        "dark"
+    ],
+    "icon": "icon.png",
+    "contributes": {
+        "themes": [
+            {
+                "label": "Aviation VSCode Theme",
+                "uiTheme": "vs-dark",
+                "path": "./themes/aviation-vscode-theme.json"
+            }
+        ]
+    }
+}
