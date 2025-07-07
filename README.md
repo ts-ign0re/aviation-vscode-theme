@@ -9,8 +9,7 @@ Ideal for developers who want high signal-to-noise UI and attention guidance lik
 
 ## Installing
 
-You can install this theme from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items/ts-ignore.aviation-productivity-theme),  
-or from the [Open VSX Registry](https://open-vsx.org/extension/ts-ignore/aviation-productivity-theme).
+You can install this theme from the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ts-ign0re.aviation-vscode-theme)
 
 
 ## Design Notes
