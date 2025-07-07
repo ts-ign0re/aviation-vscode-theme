@@ -1,7 +1,5 @@
 # Aviation Productivity Theme
 
-[![Marketplace](https://vsmarketplacebadge.apphb.com/version-short/ts-ignore.aviation-productivity-theme.svg)](https://marketplace.visualstudio.com/items/ts-ignore.aviation-productivity-theme)
-
 Dark cockpit focus, light radar sidebars.  
 Inspired by avionics and human-machine interface (HMI) design in aviation systems.
 
