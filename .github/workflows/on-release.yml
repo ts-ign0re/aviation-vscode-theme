@@ -28,9 +28,6 @@ jobs:
         run: |
           echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
-      - name: Build extension
-        run: npm run build
-
       - name: Publish extension to VSCode Marketplace
         env:
           AZURE_TOKEN: ${{ secrets.AZURE_ACCESS_TOKEN }}
