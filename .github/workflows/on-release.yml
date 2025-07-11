@@ -1,15 +1,16 @@
-name: Publish VSCode Extension
+name: Publish VSCode Extension from Tag
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -23,29 +24,14 @@ jobs:
       - name: Install vsce
         run: npm install -g @vscode/vsce
 
-      - name: Get version from package.json
-        id: version
-        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+      - name: Extract version from tag
+        id: tag
+        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
-      - name: Get extension info from package.json
-        id: info
+      - name: Update package.json version
         run: |
-          publisher=$(jq -r .publisher package.json)
-          name=$(jq -r .name package.json)
-          echo "publisher=$publisher" >> "$GITHUB_OUTPUT"
-          echo "name=$name" >> "$GITHUB_OUTPUT"
-
-      - name: Get latest published version
-        id: published
-        run: |
-          published=$(vsce show ${{ steps.info.outputs.publisher }}.${{ steps.info.outputs.name }} --json | jq -r '.versions[-1]')
-          echo "latest_published=$published" >> "$GITHUB_OUTPUT"
-
-      - name: Check if version is already published
-        if: steps.version.outputs.version == steps.published.outputs.latest_published
-        run: |
-          echo "Version ${{ steps.version.outputs.version }} already published. Skipping."
-          exit 0
+          version=${{ steps.tag.outputs.version }}
+          jq ".version = \"$version\"" package.json > tmp.$$.json && mv tmp.$$.json package.json
 
       - name: Build extension
         run: npm run build
@@ -53,20 +39,4 @@ jobs:
       - name: Publish to VSCode Marketplace
         env:
           AZURE_TOKEN: ${{ secrets.AZURE_ACCESS_TOKEN }}
-        run: |
-          vsce publish --pat "$AZURE_TOKEN"
-
-      - name: Generate changelog
-        id: changelog
-        run: |
-          tag=$(git describe --tags --abbrev=0)
-          changelog=$(git log "${tag}^".."${tag}" --pretty=format:'[%h]: %s')
-          content="Release ${{ steps.version.outputs.version }}%0A%0A====changelog====%0A$changelog"
-          echo "content=$content" >> "$GITHUB_OUTPUT"
-
-      - name: Update GitHub release notes
-        uses: softprops/action-gh-release@v2
-        with:
-          body: ${{ steps.changelog.outputs.content }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: vsce publish --pat "$AZURE_TOKEN" --no-git-tag-version
