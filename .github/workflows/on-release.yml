@@ -1,16 +1,15 @@
-name: Publish VSCode Extension from Tag
+name: Publish VSCode Extension From GitHub Release
 
 on:
-  push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+  release:
+    types: [published]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -25,18 +24,15 @@ jobs:
         run: npm install -g @vscode/vsce
 
       - name: Extract version from tag
-        id: tag
-        run: echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
-
-      - name: Update package.json version
+        id: version
         run: |
-          version=${{ steps.tag.outputs.version }}
-          jq ".version = \"$version\"" package.json > tmp.$$.json && mv tmp.$$.json package.json
+          echo "version=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
       - name: Build extension
         run: npm run build
 
-      - name: Publish to VSCode Marketplace
+      - name: Publish extension to VSCode Marketplace
         env:
           AZURE_TOKEN: ${{ secrets.AZURE_ACCESS_TOKEN }}
-        run: vsce publish --pat "$AZURE_TOKEN" --no-git-tag-version
+        run: |
+          vsce publish ${{ steps.version.outputs.version }} --pat "$AZURE_TOKEN" --no-git-tag-version
